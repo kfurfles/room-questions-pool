@@ -1,0 +1,1 @@
+export const ENVIROMENT_TOKEN = 'ENV_TOKEN_DI'
