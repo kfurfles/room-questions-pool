@@ -49,7 +49,6 @@ export class LogMiddleware implements NestMiddleware {
   }
   
   private methodSelector(req: Request): (req: Request) => void {
-    console.log(req.method)
     const method = req.method 
     return {
       'GET': this.GetMethod,

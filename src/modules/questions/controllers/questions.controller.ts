@@ -10,14 +10,22 @@ import {
 import { QuestionsService } from '../services/questions.service';
 import { CreateQuestionDto } from '../dto/create-question.dto';
 import { UpdateQuestionDto } from '../dto/update-question.dto';
+import { RoomsSocketGateway } from '../websockets/rooms-socket.gateway';
 @Controller('questions')
 export class QuestionsController {
-  constructor(private readonly questionsService: QuestionsService) {}
+  constructor(
+    protected readonly roomsSocketGateway: RoomsSocketGateway,
+    protected readonly questionsService: QuestionsService
+  ) {}
 
   @Post()
   async create(@Body() createQuestionDto: CreateQuestionDto) {
     try {
-      return await this.questionsService.create(createQuestionDto);
+      const result = await this.questionsService.create(createQuestionDto);
+      this.roomsSocketGateway.newQuestion()
+      
+      return result
+      
     } catch (error) {
       return { error: error.message }
     }

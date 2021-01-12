@@ -5,10 +5,12 @@ import { ConfigurationModule } from './modules/configuration/configuration.modul
 import { LogMiddleware } from './modules/logger/log.middleware';
 import { LoggerModule } from './modules/logger/logger.module';
 import { QuestionsModule } from './modules/questions/questions.module';
+import { RoomsModule } from './modules/rooms/rooms.module';
 
 @Module({
   imports: [
     QuestionsModule,
+    RoomsModule,
     ConfigurationModule,
     LoggerModule,
   ],
