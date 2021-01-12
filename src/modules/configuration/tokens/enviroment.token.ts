@@ -1,1 +1,1 @@
-export const ENVIROMENT_TOKEN = 'ENV_TOKEN_DI'
+export const ENVIROMENT_TOKEN =  Symbol('ENV_TOKEN_DI')

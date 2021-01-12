@@ -5,19 +5,22 @@ import {
   Body,
   Put,
   Param,
-  Delete,
+  Delete 
 } from '@nestjs/common';
 import { QuestionsService } from '../services/questions.service';
 import { CreateQuestionDto } from '../dto/create-question.dto';
 import { UpdateQuestionDto } from '../dto/update-question.dto';
-
-@Controller('banana')
+@Controller('questions')
 export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @Post()
   async create(@Body() createQuestionDto: CreateQuestionDto) {
-    return await this.questionsService.create(createQuestionDto);
+    try {
+      return await this.questionsService.create(createQuestionDto);
+    } catch (error) {
+      return { error: error.message }
+    }
   }
 
   @Get()

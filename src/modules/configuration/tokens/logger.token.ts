@@ -1,1 +1,1 @@
-export const LOGGER_TOKEN = 'LOGGER_TOKEN_DI'
+export const LOGGER_TOKEN = Symbol('LOGGER_TOKEN_DI')

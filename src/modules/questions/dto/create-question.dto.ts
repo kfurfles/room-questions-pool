@@ -1,3 +1,4 @@
 export class CreateQuestionDto {
-    question: string
+    name: string
+    roomId: string
 }

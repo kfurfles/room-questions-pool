@@ -1,1 +1,1 @@
-export const LOG4JS_TOKEN = 'LOG4JS_TOKEN_INSTANCE'
+export const LOG4JS_TOKEN =  Symbol('LOG4JS_TOKEN_INSTANCE')

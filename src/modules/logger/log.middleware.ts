@@ -28,8 +28,6 @@ export class LogMiddleware implements NestMiddleware {
     this.logger.info(`
       METHOD: \t${req.method}
       URL: \t${req.baseUrl}${req.url}
-      PARAMS: \t${JSON.stringify(req.params)}
-      QUERY: \t${JSON.stringify(req.query)},
       BODY: \t${JSON.stringify(req.body)}
     `)
   }

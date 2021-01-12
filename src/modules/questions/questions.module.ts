@@ -2,18 +2,15 @@ import { Module } from '@nestjs/common';
 import { QuestionsService } from './services/questions.service';
 import { QuestionsController } from './controllers/questions.controller';
 import { MongoModule } from '../infrastructure/database/mongo/mongo.module';
-import { QuestionRepositoryProvider } from './provider/question-repository.provider';
-
+import { UpdateRoomsService } from '../rooms/services/update-room.service';
+import { GetRoomsService } from '../rooms/services/get-room.service';
 @Module({
-  imports: [
-    MongoModule
-  ],
-  controllers: [
-    QuestionsController
-  ],
+  imports: [MongoModule],
+  controllers: [QuestionsController],
   providers: [
-    QuestionRepositoryProvider,
     QuestionsService,
+    UpdateRoomsService,
+    GetRoomsService
   ],
 })
 export class QuestionsModule {}
