@@ -36,7 +36,9 @@ const App = () => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
+            <Text style={{ textAlign:'center' }}>Hello guys</Text>
+
+          {/* <Header />
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
@@ -69,8 +71,8 @@ const App = () => {
               </Text>
             </View>
             <LearnMoreLinks />
-          </View>
-        </ScrollView>
+          </View> */}
+        </ScrollView> 
       </SafeAreaView>
     </>
   );
