@@ -3,7 +3,7 @@ import { LOGGER_TOKEN } from "../tokens/logger.token";
 import { ValueProvider } from "@nestjs/common";
 import { Configuration } from 'log4js';
 
-import enviroments from './../enviroments'
+import enviroments from '../../configuration/enviroments'
 
 const ENV = enviroments[process.env.NODE_ENV] as  TypeEnviromentsMode
 

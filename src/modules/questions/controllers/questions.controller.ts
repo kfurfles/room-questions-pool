@@ -22,7 +22,8 @@ export class QuestionsController {
   async create(@Body() createQuestionDto: CreateQuestionDto) {
     try {
       const result = await this.questionsService.create(createQuestionDto);
-      this.roomsSocketGateway.newQuestion()
+      const { _id, questions } = result
+      this.roomsSocketGateway.newQuestion(_id.toString(), questions)
       
       return result
       

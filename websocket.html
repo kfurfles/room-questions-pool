@@ -9,15 +9,16 @@ var wsUri = 'ws://localhost:8080';
 
   function init()
   {
-    const socket = new WebSocket('ws://localhost:8080');
+    const socket = new WebSocket('ws://localhost:8080?roomid=5ffe5f5405eda440e035a2531');
+    window.socket = socket
       socket.onopen = function() {
         console.log('Connected');
-        socket.send(
-          JSON.stringify({
-            event: 'events',
-            data: 'test',
-          }),
-        );
+        // socket.send(
+        //   JSON.stringify({
+        //     event: 'events',
+        //     data: {}
+        //   }),
+        // );
 
         // socket.onmessage = function(data) {
         //   console.log(data);
@@ -31,12 +32,11 @@ var wsUri = 'ws://localhost:8080';
     socket.onmessage = function (event) {
         console.log(event.data);
     }
-    // var socket = io(wsUri)
-    // socket.on('msgToClient', (message) => {
-    //     console.log({ message })
-    // })
     
-    // console.log(socket)
+    // setTimeout(() => {
+    //   console.log('dispatching close')
+    //   socket.close()
+    // }, 3000)
 
   }
 

@@ -1,54 +1,51 @@
 import { 
   WebSocketGateway, 
-  SubscribeMessage, MessageBody, 
   WebSocketServer, 
   OnGatewayInit, 
   OnGatewayConnection, 
-  OnGatewayDisconnect, 
-  WsResponse} from '@nestjs/websockets';
-// import { RoomsSocketService } from '../../rooms-socket/rooms-socket.service';
-// import { CreateRoomsSocketDto } from '../dto/create-rooms-socket.dto';
-// import { UpdateRoomsSocketDto } from '../dto/update-rooms-socket.dto';
+  OnGatewayDisconnect
+} from '@nestjs/websockets';
 import { Server } from 'ws';
+import { uuid } from 'uuidv4'
+import { getAllUrlParams } from 'src/modules/helpers/url-params';
+import { Question } from '../entities/question.entity';
+interface AppWebSocket extends Server {
+  id: string,
+  roomId: string
+}
 
 @WebSocketGateway(8080, { transports: ['websocket'] })
 export class RoomsSocketGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect{
-  // constructor() {}
+  clients = []
 
   @WebSocketServer() server: Server;
 
-  @SubscribeMessage('events')
-  handleEvent(client: any, data: unknown): WsResponse<unknown> {
-    const event = 'events';
+  newQuestion(roomID: string, questions: Question[]) {
 
-    console.log({ data })
-    return { event, data };
+    this.server.clients.forEach((client) => {
+      const clientRoomID = client['roomId']
+
+      if(roomID.match(clientRoomID)){
+        client.send(JSON.stringify({ questions }))
+      }
+    })
   }
 
-  newQuestion() {
-    setInterval(() => {
-      console.log('called')
-      this.server.clients.forEach((client) => {
-        client.send(new Date().toTimeString());
-      });
-    }, 1000);
-    // this.server.clients().emit('teste', 'foooooooo')
-    // this.server.emit('msgToClient', 'HELLO CLIENT');
+  afterInit(server: Server) { 
+    server.on('connection', (c: AppWebSocket, r) => this.handleConnection(c,r));
+  }
+  
+  handleDisconnect(client: AppWebSocket) {
+    console.log(`Client disconnected, ID: ${client.id} || room: ${client.roomId}`)
   }
 
-  afterInit(server: Server) {
-    server.on('connection', (ws) => {
-      console.log('Client connected');
-      ws.on('close', () => console.log('Client disconnected'));
-    });
-   }
-  
-   handleDisconnect(client: any) {
-    console.log(`Client disconnected: ${client.id}`);
-   }
-  
-   handleConnection(client: any, ...args: any[]) {
-    //  console.log(client)
-    console.log(`Client connected: ${client.id}`);
-   }
+  handleConnection(client: AppWebSocket, req: any) {
+    const params = getAllUrlParams(req.url);
+    client.id =  uuid()
+    client.roomId = params['roomid']
+
+    console.log(`Client connected, ID: ${client.id} || room: ${client.roomId}`)
+    
+    client.once('close', (e) => this.handleDisconnect(client))
+  }
 }
