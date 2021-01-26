@@ -3,16 +3,18 @@ version: '3.1'
 
 services:
 
-  # server:
-  #   container_name: NEST_APP
-  #   command: npm run start:dev
-  #   build: .
-  #   ports:
-  #     - "3000:3000" ## redirecionamento de porta quando chegar alguma requisição na porta 3000 chama o container na porta 3000
-  #   volumes:
-  #     - .:/usr/app
-  #   networks:
-  #     - db-compose-network
+  server:
+    container_name: NEST_APP
+    command: npm run start:dev
+    build: .
+    ports:
+      - "3000:3000" ## redirecionamento de porta quando chegar alguma requisição na porta 3000 chama o container na porta 3000
+    volumes:
+      - .:/usr/app
+    depends_on:
+      - mongo-express
+    networks:
+      - nest-network
 
   mongo:
     container_name: 'MONGO_DB'
@@ -26,7 +28,7 @@ services:
     volumes: 
       - ${PWD}/scripts/mongodb:/docker-entrypoint-initdb.d/
     networks:
-      - db-compose-network
+      - nest-network
 
   mongo-express:
     image: mongo-express
@@ -36,7 +38,8 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: projectuser
       ME_CONFIG_MONGODB_ADMINPASSWORD: password123
+    networks:
+      - nest-network
 
-networks: 
-  db-compose-network:
-    driver: bridge
+networks:
+  nest-network:
