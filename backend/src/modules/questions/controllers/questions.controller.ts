@@ -21,11 +21,12 @@ export class QuestionsController {
   @Post()
   async create(@Body() createQuestionDto: CreateQuestionDto) {
     try {
-      const result = await this.questionsService.create(createQuestionDto);
-      const { _id, questions } = result
-      this.roomsSocketGateway.newQuestion(_id.toString(), questions)
+      // const result = await this.questionsService.create(createQuestionDto);
+      // const { _id, questions } = result
+      // const { _id, questions } = result
+      // this.roomsSocketGateway.newQuestion(_id.toString(), questions)
       
-      return result
+      // return result
       
     } catch (error) {
       return { error: error.message }

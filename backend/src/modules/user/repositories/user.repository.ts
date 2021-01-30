@@ -27,6 +27,8 @@ export class UserRepository {
   }
 
   findOne(id: string) {
+    return this.userModel.findById(id).exec()
+
     return `This action returns a #${id} user`;
   }
 

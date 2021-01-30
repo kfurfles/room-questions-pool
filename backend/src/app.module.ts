@@ -24,8 +24,8 @@ MongooseModule.forRoot(`mongodb://${USER}:${PASSWORD}@${HOST}/${DB}?authSource=d
   imports: [
     MongooseConfigModule(),
     // MongooseModule.forRoot(`mongodb://${USER}:${PASSWORD}@${HOST}/${DB}`),
-    // QuestionsModule,
-    // RoomsModule,
+    QuestionsModule,
+    RoomsModule,
     ConfigurationModule,
     LoggerModule,
     UserModule

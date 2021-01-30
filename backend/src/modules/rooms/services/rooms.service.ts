@@ -9,11 +9,13 @@ import { Room } from '../entities/room.entity';
 import { CreateRoomsService } from './create-room.service';
 import { GetRoomsService } from './get-room.service';
 import { UpdateRoomsService } from './update-room.service';
+import { RoomsRepository } from './../repositories/rooms.repository'
 
 @Injectable()
 export class RoomsService {
   constructor(
-    @Inject(ROOMS_REPOSITORY) protected repository: MongoRepository<Room>,
+    protected roomsRepository: RoomsRepository,
+    // @Inject(ROOMS_REPOSITORY) protected repository: MongoRepository<Room>,
     protected getRoomsService: GetRoomsService,
     protected updateRoomsService: UpdateRoomsService,
     protected createRoomsService: CreateRoomsService
@@ -22,28 +24,16 @@ export class RoomsService {
   }
 
   create(createRoomDto: CreateRoomDto) {
+    const { name, password, userId } = createRoomDto
 
-    const { name, questions, password, userId } = createRoomDto
-    
-    return this.createRoomsService.execute(userId, { name, questions, password })
-    // const { name, questions, password, userId } = createRoomDto
-
-    // const newRoom = new Room(name, questions, password)
-    
-    // const savedRoom = await this.repository.save(newRoom)
-
-    // return savedRoom;
+    return this.createRoomsService.execute(userId, { name, password })
   }
 
   async findOne(id: string) {
     try {
       const roomID = ObjectID(id)
     
-      const room = await this.repository.findOne({
-        where:{
-          _id: roomID
-        }
-      }, { transaction: true });
+      const room = await this.roomsRepository.findOne(id)
 
       if(!room) throw new Error('Room not found') 
 

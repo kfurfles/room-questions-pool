@@ -7,37 +7,42 @@ import { ROOMS_REPOSITORY } from 'src/modules/infrastructure/database/mongo/toke
 import { User, UserDocument } from 'src/modules/user/entities/user.entity';
 import { USER_REPOSITORY } from 'src/modules/user/tokens/user-repository.token';
 import { MongoRepository, ObjectID } from 'typeorm';
-import { Room } from '../entities/room.entity';
+import { Room, RoomDocument } from '../entities/room.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { RoomsRepository } from '../repositories/rooms.repository';
+import { UserRepository } from 'src/modules/user/repositories/user.repository';
+import { CreateRoomDto } from '../dto/create-room.dto';
+import { generate } from 'generate-password';
 
 
 
 @Injectable({ scope: Scope.REQUEST })
 export class CreateRoomsService  implements IService{
+  // constructor(
+  //   @Inject(ROOMS_REPOSITORY) protected roomRepository: MongoRepository<Room>,
+  //   @Inject(USER_REPOSITORY) protected userRepository: MongoRepository<User>,
+  //   @InjectModel(User.name) private readonly userModel: Model<UserDocument>
+  // ){ }
+
   constructor(
-    @Inject(ROOMS_REPOSITORY) protected roomRepository: MongoRepository<Room>,
-    // @Inject(USER_REPOSITORY) protected userRepository: MongoRepository<User>,
-    // @InjectModel(User.name) private readonly userModel: Model<UserDocument>
-  ){ }
+    protected roomsRepository: RoomsRepository,
+    protected userRepository: UserRepository
+  ){  }
 
-  async execute(UserId: string, updateRoomDto: Partial<Room>): Promise<Room| unknown> {
+  async execute(userId: string, createRoomDto: Partial<Omit<CreateRoomDto, 'userId'>>): Promise<RoomDocument> {
     
-    // const user = new User()
-    // user._id = new ObjectID(UserId)
-    // const { name, questions, password } = updateRoomDto
-    // const userID = new ObjectID(UserId)    
-    
+    const user = await this.userRepository.findOne(userId)
 
-    // const findedUser = await this.userRepository.find({  })
+    if(!user) throw new TypeError('User not found')
 
-    // console.log(findedUser)
+    const { 
+      name, 
+      password =  generate({ length: 10, numbers: true})
+    } = createRoomDto
 
-    // const newRoom = new Room(name, questions, password, userId)
-    
-    // const savedRoom = await this.repository.save(newRoom)
+    const createdRoom = await this.roomsRepository.create({ name, userId, password })
 
-    // return savedRoom;
-    return {}
+    return createdRoom
   }
 }

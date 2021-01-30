@@ -1,45 +1,33 @@
-import { generate } from "generate-password";
-import { Question } from "src/modules/questions/entities/question.entity";
-import { Entity, ObjectID, ObjectIdColumn, Column } from "typeorm";
+import { Prop, Schema } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 
-@Entity({
-    name: 'rooms'
-})
+export type RoomDocument = Room & Document;
+
+Schema({ collection: 'rooms' })
 export class Room {
+    @Prop({ type: mongoose.Schema.Types.ObjectId })
+    _id: string;
 
-    @ObjectIdColumn()
-    _id: ObjectID;
+    @Prop([String])
+    name: string
 
-    @Column()
-    name: string;
+    @Prop([String])
+    password: string
 
-    @Column()
-    password: string;
+    // @Prop({ type: mongoose.Schema.Types.Mixed })
+    // questions: string
 
-    @Column(() => Question)
-    questions: Question[];
-
-    @ObjectIdColumn()
+    @Prop([String])
     userId: string
-
-    // constructor(name = '', questions: { name: string }[] = [], password, userId){
-    //     this.name = name?.toLowerCase();
-    //     this.userId = userId
-    //     this.password = password || generate({ length: 10, numbers: true})
-    //     this.questions = questions.map(question => {
-    //         return new Question(question.name)
-    //     });
-    // }
-
-    static createRoom(name = '', questions: { name: string }[] = [], password, userId) {
-        const createdRoom = new Room()
-        createdRoom.name = name?.toLowerCase();
-        createdRoom.userId = userId
-        createdRoom.password = password || generate({ length: 10, numbers: true})
-        createdRoom.questions = questions.map(question => {
-            return new Question(question.name)
-        });
-
-        return Room
-    }
 }
+
+export const RoomSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    password: { type: String, required: true },
+    // questions: { type: String, required: true },
+    userId: { type: String, required: true },
+});
+
+
+// export const UserSchema = SchemaFactory.createForClass(User);

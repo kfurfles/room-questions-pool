@@ -8,26 +8,27 @@ import { Room } from '../entities/room.entity';
 
 @Injectable({ scope: Scope.REQUEST })
 export class GetRoomsService  implements IService{
-  constructor(@Inject(ROOMS_REPOSITORY) protected repository: MongoRepository<Room>){
+  // constructor(@Inject(ROOMS_REPOSITORY) protected repository: MongoRepository<Room>){
     
-  }
+  // }
 
   async execute(id: string): Promise<Room> {
-    try {
-      const roomID = ObjectID(id)
+    // try {
+    //   const roomID = ObjectID(id)
   
-      const room = await this.repository.findOne({
-        where:{
-          _id: roomID
-        }
-      }, { transaction: true });
+    //   const room = await this.repository.findOne({
+    //     where:{
+    //       _id: roomID
+    //     }
+    //   }, { transaction: true });
 
-      if(!room) throw new Error('Room not found')
+    //   if(!room) throw new Error('Room not found')
 
-      return room
+    //   return room
     
-    } catch (e) {
-      throw new TypeError(e.message);
-    }
+    // } catch (e) {
+    //   throw new TypeError(e.message);
+    // }
+    return {} as Room
   }
 }
