@@ -8,32 +8,37 @@ import { USER_REPOSITORY } from '../tokens/user-repository.token';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UpdateUserService implements IService{
-  constructor(@Inject(USER_REPOSITORY) protected repository: MongoRepository<User>){
+  // constructor(
+  //   @Inject(USER_REPOSITORY) protected repository: MongoRepository<User>
+  // ){
     
-  }
+  // }
 
-  async execute(id: string, updateUserDto: Partial<User>): Promise<User> {
-    try {
-      const updateUser = clearObject({ ...updateUserDto })
-      console.log({ updateUser })
-      const userID = ObjectID(id)     
+  async execute(id: string, updateUserDto: Partial<User>): Promise<unknown> {
+  // async execute(id: string, updateUserDto: Partial<User>): Promise<User> {
+    // try {
+    //   const updateUser = clearObject({ ...updateUserDto })
+    //   console.log({ updateUser })
+    //   const userID = ObjectID(id)     
       
-      const { value } = await this.repository.findOneAndUpdate(
-        { _id: userID }, 
-        {  $set: { ...updateUser } },
-        {  returnOriginal: false  }
-      );
+    //   const { value } = await this.repository.findOneAndUpdate(
+    //     { _id: userID }, 
+    //     {  $set: { ...updateUser } },
+    //     {  returnOriginal: false  }
+    //   );
 
-      if(!value) throw new TypeError('User not found')
+    //   if(!value) throw new TypeError('User not found')
 
-      return value;
+    //   return value;
     
-    } catch (e) {
-      if (e instanceof TypeError) {
-          throw new TypeError(e.message);
-      }
+    // } catch (e) {
+    //   if (e instanceof TypeError) {
+    //       throw new TypeError(e.message);
+    //   }
 
-      throw new TypeError('The operation could not be completed');
-    }
+    //   throw new TypeError('The operation could not be completed');
+    // }
+
+    return {}
   }
 }

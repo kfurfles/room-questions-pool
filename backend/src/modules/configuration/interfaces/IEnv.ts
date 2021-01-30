@@ -8,6 +8,6 @@ export type TypeConfig = {
   PORT: number
   DB_MONGO_USER: string
   DB_MONGO_PASSWORD: string
-  DB_MONGO_COLLECTION: string
+  DB_MONGO_DB: string
   DB_MONGO_HOST: string
 };

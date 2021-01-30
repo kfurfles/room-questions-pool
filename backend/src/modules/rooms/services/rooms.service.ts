@@ -6,6 +6,7 @@ import { MongoRepository } from 'typeorm';
 import { CreateRoomDto } from '../dto/create-room.dto';
 import { UpdateRoomDto } from '../dto/update-room.dto';
 import { Room } from '../entities/room.entity';
+import { CreateRoomsService } from './create-room.service';
 import { GetRoomsService } from './get-room.service';
 import { UpdateRoomsService } from './update-room.service';
 
@@ -14,19 +15,24 @@ export class RoomsService {
   constructor(
     @Inject(ROOMS_REPOSITORY) protected repository: MongoRepository<Room>,
     protected getRoomsService: GetRoomsService,
-    protected updateRoomsService: UpdateRoomsService
+    protected updateRoomsService: UpdateRoomsService,
+    protected createRoomsService: CreateRoomsService
   ){
     
   }
 
-  async create(createRoomDto: CreateRoomDto) {
-    const { name, questions, password } = createRoomDto
+  create(createRoomDto: CreateRoomDto) {
 
-    const newRoom = new Room(name, questions, password)
+    const { name, questions, password, userId } = createRoomDto
     
-    const savedRoom = await this.repository.save(newRoom)
+    return this.createRoomsService.execute(userId, { name, questions, password })
+    // const { name, questions, password, userId } = createRoomDto
 
-    return savedRoom;
+    // const newRoom = new Room(name, questions, password)
+    
+    // const savedRoom = await this.repository.save(newRoom)
+
+    // return savedRoom;
   }
 
   async findOne(id: string) {

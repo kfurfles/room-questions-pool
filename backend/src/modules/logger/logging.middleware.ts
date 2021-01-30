@@ -31,7 +31,7 @@ export class LoggingInterceptor implements NestInterceptor {
   printLog(time: number, req: Request, res: Response, body: string | { [data: string] : any }){
     const logObj = JSON.stringify(this.createLog(time, req, res,body), null, 2)
     
-    this.logger.info(logObj)
+    // this.logger.info(logObj)
   }
 
   createLog(time: number, req: Request, res: Response, body: string | { [data: string] : any }){

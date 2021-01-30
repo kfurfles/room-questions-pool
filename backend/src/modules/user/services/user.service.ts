@@ -1,16 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { MongoRepository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { User } from '../entities/user.entity';
-import { USER_REPOSITORY } from '../tokens/user-repository.token';
+import { UserRepository } from '../repositories/user.repository';
+
 import { UpdateUserService } from './update-user.service'
 
 @Injectable()
 export class UserService {
 
   constructor(
-    @Inject(USER_REPOSITORY) protected repository: MongoRepository<User>,
+    protected userRepository: UserRepository,
     protected updateUserSerivce: UpdateUserService
   ){
     
@@ -18,20 +17,11 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
 
-    const { firstName, lastName, email, password } = createUserDto
-
-    const newUser = new User(firstName, lastName, email, password)
-    
-    const savedUser = await this.repository.save(newUser)
-
-    return savedUser;
+    return this.userRepository.create(createUserDto)
   }
 
   async findAll() {
-
-    const users = await this.repository.find({});
-
-    return users;
+    return this.userRepository.findAll()
   }
 
   findOne(id: string) {

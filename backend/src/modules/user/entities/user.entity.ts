@@ -1,25 +1,35 @@
-import { Entity, ObjectID, ObjectIdColumn, Column } from "typeorm";
-@Entity({ name: 'users' })
-export class User {
-    @ObjectIdColumn()
-    _id: ObjectID;
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Mongoose } from 'mongoose';
+import * as mongoose from 'mongoose';
 
-    @Column()
+
+export type UserDocument = User & Document;
+
+Schema({ collection: 'user' })
+export class User {
+    
+    @Prop({ type: mongoose.Schema.Types.ObjectId })
+    _id: string;
+
+    @Prop([String])
     firstName: string
 
-    @Column()
+    @Prop([String])
     lastName: string
 
-    @Column()
+    @Prop([String])
     password: string
 
-    @Column()
+    @Prop([String])
     email: string
-
-    constructor(firstName: string, lastName: string, password: string, email: string){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-    }
 }
+
+export const UserSchema = new mongoose.Schema({
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true },
+});
+
+
+// export const UserSchema = SchemaFactory.createForClass(User);

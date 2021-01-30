@@ -19,11 +19,27 @@ export class Room {
     @Column(() => Question)
     questions: Question[];
 
-    constructor(name = '', questions: { name: string }[] = [], password){
-        this.name = name?.toLowerCase();
-        this.password = password || generate({ length: 10, numbers: true})
-        this.questions = questions.map(question => {
+    @ObjectIdColumn()
+    userId: string
+
+    // constructor(name = '', questions: { name: string }[] = [], password, userId){
+    //     this.name = name?.toLowerCase();
+    //     this.userId = userId
+    //     this.password = password || generate({ length: 10, numbers: true})
+    //     this.questions = questions.map(question => {
+    //         return new Question(question.name)
+    //     });
+    // }
+
+    static createRoom(name = '', questions: { name: string }[] = [], password, userId) {
+        const createdRoom = new Room()
+        createdRoom.name = name?.toLowerCase();
+        createdRoom.userId = userId
+        createdRoom.password = password || generate({ length: 10, numbers: true})
+        createdRoom.questions = questions.map(question => {
             return new Question(question.name)
         });
+
+        return Room
     }
 }
