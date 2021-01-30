@@ -9,11 +9,7 @@ import { LoggerProvider } from './providers/logger.provider';
     providers:[
         LogMiddleware,
         LogProvider,
-        LoggerProvider,
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: LoggingInterceptor,
-        }
+        LoggerProvider
     ],
     exports: [
         LogProvider

@@ -11,29 +11,30 @@ export class LoggingInterceptor implements NestInterceptor {
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const request: Request = context.switchToHttp().getRequest()
-    const response: Response = context.switchToHttp().getResponse()
+    const ctx = context.switchToHttp();
+    const request: Request = ctx.getRequest();
+    const response: Response = ctx.getResponse()
 
-    const now = Date.now();
+    const now = Date.now()
+    
     return next
       .handle()
       .pipe(
         first(),
         tap((data) => {
-          console.log('HTTIN')
-          // this.printLog(now, request, response, data)
+          this.printLog(now, request, response, data)
           return data
         }),
       )
   }
 
-  printLog(time: number, req: Request, res: Response, body: string | Object){
+  printLog(time: number, req: Request, res: Response, body: string | { [data: string] : any }){
     const logObj = JSON.stringify(this.createLog(time, req, res,body), null, 2)
     
     this.logger.info(logObj)
   }
 
-  createLog(time: number, req: Request, res: Response, body: string | Object){
+  createLog(time: number, req: Request, res: Response, body: string | { [data: string] : any }){
     const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     const method = req.method;
     const path = req.baseUrl;
@@ -51,6 +52,6 @@ export class LoggingInterceptor implements NestInterceptor {
       resBody: body,
       resHeaders: res.getHeaders(),
       status: res.statusCode
-  }
+    }
   }
 }
