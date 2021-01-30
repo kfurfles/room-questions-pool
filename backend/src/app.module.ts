@@ -1,11 +1,11 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigurationModule } from './modules/configuration/configuration.module';
-import { LogMiddleware } from './modules/logger/log.middleware';
 import { LoggerModule } from './modules/logger/logger.module';
 import { QuestionsModule } from './modules/questions/questions.module';
 import { RoomsModule } from './modules/rooms/rooms.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -13,6 +13,7 @@ import { RoomsModule } from './modules/rooms/rooms.module';
     RoomsModule,
     ConfigurationModule,
     LoggerModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
