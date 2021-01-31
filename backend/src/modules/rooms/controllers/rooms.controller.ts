@@ -9,8 +9,12 @@ export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
   @Post()
-  create(@Body() createRoomDto: CreateRoomDto) {    
-    return this.roomsService.create(createRoomDto);
+  create(@Body() createRoomDto: CreateRoomDto, @Res({ passthrough: true }) res: Response) {
+    try {
+      return this.roomsService.create(createRoomDto);
+    } catch (error){
+      res.status(HttpStatus.BAD_REQUEST).json({ error: error.message })
+    }
   }
 
   @Get(':id')

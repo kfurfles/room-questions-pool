@@ -33,7 +33,22 @@ export class RoomsRepository {
     return {}
   }
 
+  async patch(id: string, updateRoomDto: UpdateRoomDto){
+    try {
+      const { n: wasUpdated } = await this.roomModel.updateOne({ _id: id }, 
+        {  $set: { ...updateRoomDto } },
+        {  returnOriginal: false  })
+        
+      if(!wasUpdated) throw new TypeError("Sala não encontrada");
+        
+      return await this.roomModel.findOne({ _id: id })
+    } catch (error) {
+      throw new TypeError(error.message);
+    }    
+  }
+
   remove(id: number) {
+    this.roomModel
     return `This action removes a #${id} user`;
   }
 }

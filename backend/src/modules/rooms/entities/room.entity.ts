@@ -1,6 +1,7 @@
 import { Prop, Schema } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
+import { QuestionSchema } from 'src/modules/questions/entities/question.entity';
 
 export type RoomDocument = Room & Document;
 
@@ -15,8 +16,8 @@ export class Room {
     @Prop([String])
     password: string
 
-    // @Prop({ type: mongoose.Schema.Types.Mixed })
-    // questions: string
+    @Prop({ type: QuestionSchema })
+    questions: string
 
     @Prop([String])
     userId: string
@@ -25,7 +26,7 @@ export class Room {
 export const RoomSchema = new mongoose.Schema({
     name: { type: String, required: true },
     password: { type: String, required: true },
-    // questions: { type: String, required: true },
+    questions: QuestionSchema,
     userId: { type: String, required: true },
 });
 

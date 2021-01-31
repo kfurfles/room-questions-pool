@@ -6,17 +6,18 @@ import { GetRoomsService } from '../rooms/services/get-room.service';
 import { RoomsSocketGateway } from './websockets/rooms-socket.gateway';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Room, RoomSchema } from '../rooms/entities/room.entity';
+import { RoomsRepository } from '../rooms/repositories/rooms.repository';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Room.name, schema: RoomSchema }]),
-
   ],
   controllers: [QuestionsController],
   providers: [
     QuestionsService,
     UpdateRoomsService,
+    RoomsRepository,
     GetRoomsService,
-    RoomsSocketGateway
+    RoomsSocketGateway,
   ],
 })
 export class QuestionsModule {}

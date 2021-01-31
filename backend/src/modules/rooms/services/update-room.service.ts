@@ -1,39 +1,33 @@
-import { Inject, Injectable, Scope } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { IService } from 'src/interfaces/IService';
 import { clearObject } from 'src/modules/helpers/clear-objects';
-import { ObjectID } from 'src/modules/infrastructure/database/mongo/entities/ObjectId.entity';
-import { ROOMS_REPOSITORY } from 'src/modules/infrastructure/database/mongo/tokens/rooms-repository.token';
-import { MongoRepository } from 'typeorm';
-import { Room } from '../entities/room.entity';
+import { UpdateRoomDto } from '../dto/update-room.dto';
+import { Room, RoomDocument } from '../entities/room.entity';
+import { RoomsRepository } from '../repositories/rooms.repository';
 
 @Injectable({ scope: Scope.REQUEST })
 export class UpdateRoomsService implements IService{
-  // constructor(@Inject(ROOMS_REPOSITORY) protected repository: MongoRepository<Room>){
+  constructor(
+    protected roomsRepository: RoomsRepository,
+  ){
     
-  // }
+  }
 
-  async execute(id: string, updateRoomDto: Partial<Room>): Promise<Room> {
-    // try {
-    //   const updateroom = clearObject({ ...updateRoomDto })
-    //   const roomID = ObjectID(id)     
-      
-    //   const { value } = await this.repository.findOneAndUpdate(
-    //     { _id: roomID }, 
-    //     {  $set: { ...updateroom } },
-    //     {  returnOriginal: false  }
-    //   );
+  async execute(id: string, updateRoomDto: UpdateRoomDto): Promise<RoomDocument | any> {
+    try {
+      const updateroom = clearObject({ ...updateRoomDto })
 
-    //   if(!value) throw new TypeError('Room not found')
+      console.log({ updateroom });
 
-    //   return value;
+      return this.roomsRepository.patch(id, updateroom)
     
-    // } catch (e) {
-    //     if (e instanceof TypeError) {
-    //         throw new TypeError(e.message);
-    //     }
+    } catch (e) {
+        if (e instanceof TypeError) {
+            throw new TypeError(e.message);
+        }
 
-    //     throw new TypeError('The operation could not be completed');
-    // }
-    return {} as Room
+        throw new TypeError('The operation could not be completed');
+    }
+    // return {} as Room
   }
 }

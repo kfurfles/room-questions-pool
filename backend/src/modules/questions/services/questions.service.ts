@@ -13,7 +13,6 @@ import { GetRoomsService } from 'src/modules/rooms/services/get-room.service';
 @Injectable()
 export class QuestionsService {
   constructor(
-    // @Inject(ROOMS_REPOSITORY) protected repository: MongoRepository<Room>,
     protected getRoomsService: GetRoomsService,
     protected updateRoomsService: UpdateRoomsService
   ){
