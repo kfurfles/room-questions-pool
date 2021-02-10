@@ -6,6 +6,7 @@ import Text from './../../components/typografy/text'
 export const Container = styled.View`
 	padding-top: ${size(21, 'px')};
 	padding-left: ${size(22, 'px')};
+	/* flex: 1 */
 `
 
 export const HeaderContainer = styled.View`
@@ -13,7 +14,7 @@ export const HeaderContainer = styled.View`
 `
 
 export const QuestionsInfoContainer = styled.View`
-	padding-left: ${size(20, 'px')};
+	padding-left: ${size(50, 'px')};
 `
 
 export const QuestionInfoWrapper = styled.View`
@@ -41,7 +42,7 @@ export const QuestionInfoLegend = styled(Text)`
 export const QuestionsInfoTypesContainer = styled.View`
 	flex-direction: row;
 	justify-content: space-between;
-	padding-right: ${size(18, 'px')};
+	padding-right: ${size(30, 'px')};
 `
 
 export const QuestionTypeContainer = styled.View`
@@ -49,7 +50,7 @@ export const QuestionTypeContainer = styled.View`
 	position: relative;
 	padding-top: ${size(5, 'px')};
 	padding-bottom: ${size(5, 'px')};
-	min-width: 45%;
+	min-width: 40%;
 `
 
 export const QuestionDot = styled.View<{ color: string }>`
@@ -58,8 +59,8 @@ export const QuestionDot = styled.View<{ color: string }>`
 	background-color: ${props => props.color };
 	border-radius: 5px;
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: 10px;
+	right: 5%;
 `
 
 export const QuestionType = styled.View`

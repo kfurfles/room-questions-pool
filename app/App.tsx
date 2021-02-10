@@ -16,7 +16,7 @@ const App = () => {
 		<>
 			<ThemeProvider theme={theme}>
 				<StatusBar barStyle="light-content" />
-				<SafeAreaView>
+				<SafeAreaView style={{ flex: 1 }}>
 					<QPRoom />
 				</SafeAreaView>
 			</ThemeProvider>

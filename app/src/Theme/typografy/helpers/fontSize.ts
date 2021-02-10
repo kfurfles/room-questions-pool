@@ -65,6 +65,7 @@ const size = (s: number, unit: string = '') => {
 		}
 		return size;
 	}
+	return unit ? `${s}${unit}` : s
 	return unit ? getSize(s) + unit : getSize(s)
 };
 
