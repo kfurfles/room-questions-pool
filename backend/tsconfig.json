@@ -14,6 +14,7 @@
     "incremental": true,
     "resolveJsonModule": true,
     "paths": {
+      "@config/*":["src/modules/configuration/*"],
       "@interfaces/*":["src/modules/configuration/interfaces/*"],
       "@tokens/*": [
         "src/modules/configuration/tokens/*",

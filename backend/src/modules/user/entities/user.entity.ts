@@ -1,6 +1,9 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Mongoose } from 'mongoose';
+import { Prop, Schema } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
+import env from '@config/enviroments';
+import {values} from '@config/providers/env.provider';
+import { Log4jsFactory } from 'src/modules/logger/providers/log4js.provider';
 
 
 export type UserDocument = User & Document;
@@ -31,5 +34,7 @@ export const UserSchema = new mongoose.Schema({
     email: { type: String, required: true },
 });
 
-
-// export const UserSchema = SchemaFactory.createForClass(User);
+UserSchema.post('save', (doc) => {
+    const log4jsConfig = env[values.ENV]   
+    Log4jsFactory(log4jsConfig).debug(`User: method{save}\n ${JSON.stringify(doc, null, 2)}`)
+})

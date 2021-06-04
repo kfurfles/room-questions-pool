@@ -4,7 +4,7 @@ version: '3.1'
 services:
 
   server:
-    container_name: NEST_APP
+    container_name: NODE_APP_QUESTION_POOL
     command: npm run start:dev
     build: .
     ports:
@@ -17,7 +17,7 @@ services:
       - nest-network
 
   mongo:
-    container_name: 'MONGO_DB'
+    container_name: MONGO_DB_QUESTION_POOL
     image: mongo
     restart: always
     environment:
@@ -26,6 +26,7 @@ services:
     ports: 
       - 27017:27017
     volumes: 
+      - './.docker-data/mongo:/data/db'
       - ${PWD}/scripts/mongodb:/docker-entrypoint-initdb.d/
     networks:
       - nest-network

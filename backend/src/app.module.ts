@@ -24,13 +24,16 @@ MongooseModule.forRoot(`mongodb://${USER}:${PASSWORD}@${HOST}/${DB}?authSource=d
   imports: [
     MongooseConfigModule(),
     // MongooseModule.forRoot(`mongodb://${USER}:${PASSWORD}@${HOST}/${DB}`),
+    ConfigurationModule,
     QuestionsModule,
     RoomsModule,
-    ConfigurationModule,
     LoggerModule,
     UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
+  exports: [
+    LoggerModule
+  ]
 })
 export class AppModule{}
