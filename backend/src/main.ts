@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
+import 'reflect-metadata';
 import cors from 'cors'
 import { NestFactory } from '@nestjs/core';
 import { ENVIROMENT_TOKEN } from '@tokens/enviroment.token';
