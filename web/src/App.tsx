@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { HelmetProvider } from "react-helmet-async";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
 import { store } from "~/redux";
