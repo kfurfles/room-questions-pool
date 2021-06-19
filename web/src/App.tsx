@@ -1,49 +1,21 @@
-import { Button } from "react-bootstrap";
-import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
+import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
+import { store } from "~/redux";
 
-function App() {
-  const [count, setCount] = useState(0);
+import { App } from "~/containers/App";
 
+function AppWrapper() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <Button
-            variant="primary"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            count is: {count}
-          </Button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
+    <Provider store={store}>
+      <ThemeProvider theme={{}}>
+        <HelmetProvider>
+          <App />
+        </HelmetProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
-export default App;
+export default AppWrapper;
