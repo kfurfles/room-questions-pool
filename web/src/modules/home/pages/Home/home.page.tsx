@@ -1,18 +1,22 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import {Card} from "~/Components/Card"
 
-import { Container } from "./styles";
+import { Container, PoolQuestionArea, PoolQuestionTitle } from "./styled";
 
 function Home() {
   return (
-    <Container className="App">
+    <Container>
       <Helmet>
         <meta charSet="utf-8" />
         <title>Bem vindo !</title>
       </Helmet>
-      <header className="App-header">
-        <p>Pagina de Home!</p>
-      </header>
+        <PoolQuestionArea>
+          <PoolQuestionTitle>
+            Quantas xicáras de café você toma por dia ?
+          </PoolQuestionTitle>
+        </PoolQuestionArea>
+      
     </Container>
   );
 }
