@@ -27,10 +27,8 @@ function NonLogged() {
 export default () => {
   const auth = true
   return (
-    <Router ref={globalNavRef}>
-      <Switch>
-        { auth ? <Logged /> : <NonLogged /> }
-      </Switch>
-    </Router>
+    <Switch>
+      { auth ? <Logged /> : <NonLogged /> }
+    </Switch>
   );
 };

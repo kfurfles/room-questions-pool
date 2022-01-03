@@ -1,0 +1,1 @@
+export {RQQuestion} from './question.component'

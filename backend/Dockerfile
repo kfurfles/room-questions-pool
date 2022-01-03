@@ -10,7 +10,7 @@ WORKDIR /usr/app
 COPY package*.json ./
 
 ## Executa npm install para adicionar as dependências e criar a pasta node_modules
-RUN npm install
+RUN yarn install
 
 ## Copia tudo que está no diretório onde o arquivo Dockerfile está 
 ## para dentro da pasta /usr/app do container

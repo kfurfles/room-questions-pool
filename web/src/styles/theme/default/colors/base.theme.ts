@@ -1,3 +1,4 @@
 export const Base = {
-    white: '#fff'
+    white: '#fff',
+    black: '#223350'
 }

@@ -1,26 +1,21 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit'
+import { createStore, applyMiddleware, compose} from '@reduxjs/toolkit'
+import createSagaMiddleware from 'redux-saga'
+import { persistStore } from 'redux-persist'
 
-const counterSlice = createSlice({
-  name: 'counter',
-  initialState: {
-    value: 0
-  },
-  reducers: {
-    incremented: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1
-    },
-    decremented: state => {
-      state.value -= 1
-    }
-  }
-})
+const sagaMiddleware = createSagaMiddleware()
 
-export const { incremented, decremented } = counterSlice.actions
+import rootReducer from './rootReducer';
 
-export const store = configureStore({
-  reducer: counterSlice.reducer
-})
+const enhancer = compose(
+    applyMiddleware(sagaMiddleware),
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+export default function configureStore() {
+  const store = createStore(rootReducer, enhancer);
+  return store;
+}
+
+export const store = configureStore()
+export type IRootState = ReturnType<typeof rootReducer>;
+export const persistor = persistStore(store);

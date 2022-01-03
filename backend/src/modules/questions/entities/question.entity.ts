@@ -9,8 +9,14 @@ export class Question {
 
     @Prop([String])
     name: string
+
+    @Prop({ type: Boolean })
+    answered: boolean
 }
 
 export const QuestionSchema = new mongoose.Schema({
-    name: { type: String, required: true }
+    name: { type: String, required: true },
+    answered: { type: Boolean, required: false, default: false }
+}, {
+    timestamps: true
 });

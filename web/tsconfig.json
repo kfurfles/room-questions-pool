@@ -4,7 +4,9 @@
     "paths": {
       "~/*": ["./src/*"],
       "@core/*": ["./src/core/*"],
-      "@modules/*": ["./src/modules/*"]
+      "@modules/*": ["./src/modules/*"],
+      "@redux/*": ["./src/redux/*"],
+      "@styles/*": ["./src/styles/*"]
     },
     "target": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
