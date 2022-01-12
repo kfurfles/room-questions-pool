@@ -13,7 +13,7 @@ function App() {
       
       <RootRouter />
 
-      <ModalRoot isOpen={true} onClose={() => console.log('vai fechar')} >
+      <ModalRoot isOpen={!true} onClose={() => console.log('vai fechar')} >
         <div style={{ 
           display: 'inline-flex',
           width: '100%',

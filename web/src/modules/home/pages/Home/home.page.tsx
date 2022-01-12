@@ -59,7 +59,7 @@ function QuestionsWrapper(props: any) {
 }
 
 function CurrentQuestion(props: any) {
-  const { type, options, question } = props
+  const { type, options, question, likes } = props
   console.log(props)
 
   let QuestionTypeComponent = null
@@ -70,23 +70,26 @@ function CurrentQuestion(props: any) {
         <PoolQuestionItemContainer>
             <RQPool questions={options} />
           </PoolQuestionItemContainer>
-          <hr />
       </>
     )
   }
 
-  return (<>
+  return (
+  <>
     <PoolQuestionTitle>{question}</PoolQuestionTitle>
 
     <PoolQuestionAreaItem>
       {QuestionTypeComponent}
+      <div style={{ color: '#223350', fontWeight: 'bold', padding: '10px 0' }} >Likes: {likes}</div>
     </PoolQuestionAreaItem>
+
   </>)
 }
 
 function Home() {
 
   const { queryClient, queryData: { isLoading, isError, data } } = useGetQuestionsQuery()
+  console.log()
 
   return (
     <Container>
@@ -109,26 +112,29 @@ function Home() {
           </HeaderWrapperIcon>
 
         </HeaderRoom>
-        <PoolQuestionArea>
+        
           {!isLoading
             ?
             <> 
-              <CurrentQuestion {...data?.current} />
+              <PoolQuestionArea>
+                <CurrentQuestion {...data?.current} />
+              </PoolQuestionArea>
             
+              <PoolQuestionArea>
               <PoolQuestionAreaItem style={{ marginTop: "30px", paddingTop: "10px", opacity: 0.8}}>
                 { data?.remain.map(q => {
                     return (
                       <PoolQuestionItemContainer key={q.question}>
-                        <RQQuestion question={q.question} />
+                        <RQQuestion question={q.question} answered={q.liked} likes={q.likes}/>
                       </PoolQuestionItemContainer>
                     )
                   })
                 }
               </PoolQuestionAreaItem> 
+              </PoolQuestionArea>
             </>
             :<h1 style={{ textAlign: 'center', width: '100%' }}>Carregando</h1>
           }
-        </PoolQuestionArea>
       </MainContent>
     </Container>
   );

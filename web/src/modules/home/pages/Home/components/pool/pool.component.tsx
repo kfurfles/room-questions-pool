@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PoolItemContainer, PoolItemText ,PoolContainer} from './styled';
+import { PoolItemContainer, PoolItemText ,PoolContainer, PoolItemWrapper, PoolItemVoteButton, PoolItemVoteWrapperButton} from './styled';
 
 type RQPoolProps = {
     questions: {
@@ -15,11 +15,19 @@ const RQPool: React.FC<RQPoolProps> = (props) => {
         <PoolContainer>
             { questions.map(q => {
                 return (
-                    <PoolItemContainer key={q.text} porcentage={q.porcentage}>
-                        <PoolItemText>
-                            {q.text}
-                        </PoolItemText>
-                    </PoolItemContainer>)
+                    <PoolItemWrapper key={q.text}>
+                        <PoolItemContainer porcentage={q.porcentage}>
+                            <PoolItemText>
+                                {q.text}
+                            </PoolItemText>
+                        </PoolItemContainer>
+                        <PoolItemVoteWrapperButton>
+                            <PoolItemVoteButton>
+                                Votar
+                            </PoolItemVoteButton>
+                        </PoolItemVoteWrapperButton>
+                    </PoolItemWrapper>
+                    )
             })}
             
         </PoolContainer>

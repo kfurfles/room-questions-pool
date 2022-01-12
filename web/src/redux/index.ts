@@ -12,9 +12,9 @@ const enhancer = compose(
 );
 
 export default function configureStore() {
-  const store = createStore(rootReducer, enhancer);
-  return store;
+  return createStore(rootReducer, enhancer);
 }
+
 
 export const store = configureStore()
 export type IRootState = ReturnType<typeof rootReducer>;

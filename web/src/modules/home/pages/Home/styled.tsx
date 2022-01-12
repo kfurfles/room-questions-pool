@@ -6,6 +6,7 @@ import {Card} from "~/components/Card"
 export const Container = styled.div`
     max-width: 900px;
     min-width: 600px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     padding: 15px;
@@ -51,6 +52,8 @@ export const HeaderRoom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+    margin-bottom: 20px;
+
 `
 
 export const HeaderWrapperIcon = styled.button`

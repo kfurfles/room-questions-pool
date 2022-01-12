@@ -4,7 +4,9 @@ interface IResponse {
   userId: number,
   id: number,
   title: string,
-  completed: boolean
+  completed: boolean,
+  likes: number;
+  liked: boolean;
 }
 
 function randomIntFromInterval(min: number, max: number) { // min and max included 
@@ -23,38 +25,34 @@ export async function getQuestions() {
   const todoList = todosRes
                   .filter(t => t.completed)
                   .slice(1,20)
-                  .map(t => {
+                  .map((t,i,arr) => {
+                    const {id, title} = t
+                    const options = Array(3)
+                      .fill(null)
+                      .map((e,i) => {
+                        const el = todosRes[todosRes.length -1 - i] 
+                        return {
+                          text: el.title,
+                          porcentage: 33 * i,
+                        }
+                      })
+
+                    const likes = randomIntFromInterval(i,arr.length - 1 - i)
+
                     return {
-                      question: `${t.title} ?`,
-                      type: 'question'
+                      id,
+                      question: `${title} ?`,
+                      type: itens < 5 ? 'question' : 'pool',
+                      likes: likes,
+                      liked: !!Math.sign(randomIntFromInterval(-1,1)),
+                      options
                     }
                   })
 
-  const currentQuestion = `${todosRes[itens].title} ?`
-  const currentQuestionType = 'pool'
-  // const currentQuestionType = itens < 5 ? 'question' : 'pool'
-  const porcetageOne = randomIntFromInterval(0,100)
-  const porcetageTwo = 100 - porcetageOne
-  
-  const CurrentQuestionPoolOptions = currentQuestionType === 'pool' 
-    ? [
-        {
-                text: 'Opção 1',
-                porcentage: porcetageOne,
-              },
-              {
-                text: 'Opção 2',
-                porcentage: porcetageTwo,
-              } 
-      ]
-    : []
+  const [ current, ...remain] = todoList
 
   return {
-    current: {
-      question: currentQuestion,
-      type: currentQuestionType,
-      options: CurrentQuestionPoolOptions
-    },
-    remain: todoList
+    current,
+    remain
   }
 }

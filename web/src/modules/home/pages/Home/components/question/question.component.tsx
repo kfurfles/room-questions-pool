@@ -1,11 +1,21 @@
 import React from "react";
 
-import { PoolQuestionItem } from "./styled";
+import {LikeIcon} from '~/assets/icons/like'
 
-const RQQuestion: React.FC<{ question: string }> = (props) => {
-  const { question } = props
+import { PoolQuestionItem, PoolQuestionItemButton, PoolQuestionItemContainer, PoolQuestionItemLikeInfo } from "./styled";
+
+const RQQuestion: React.FC<{ question: string, answered?: boolean, likes: number }> = (props) => {
+  const { question, answered = false, likes } = props
+  const LikeIconStatus = answered ? <LikeIcon active fill="red" /> : <LikeIcon />
+
   return (
-    <PoolQuestionItem>{question}</PoolQuestionItem>
+    <PoolQuestionItemContainer>
+      <PoolQuestionItem>{question}</PoolQuestionItem>
+      <PoolQuestionItemButton>
+        {LikeIconStatus}
+      </PoolQuestionItemButton>
+      <PoolQuestionItemLikeInfo>Likes: {likes}</PoolQuestionItemLikeInfo>
+    </PoolQuestionItemContainer>
   );
 }
 
